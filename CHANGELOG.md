@@ -3,6 +3,7 @@
 ## Unreleased
 
 - **Floorplan installs in Cursor.** The repo is now a Cursor plugin and marketplace too (`.cursor-plugin/`), with the same skill and map. Import `mohammedfarish/floorplan` from **Customize**, or copy it into `~/.cursor/plugins/local` to try it. The map's Ask bar still answers through the Claude Code CLI or Codex for now. See [Floorplan in Cursor](docs/cursor.md).
+- **Release tests check `.cursor-plugin/marketplace.json` against Cursor's official marketplace schema** (copied to `tests/fixtures/`), and the marketplace entry no longer carries a `category` field the schema rejects.
 
 ## 0.6.0 (2026-10-31)
 

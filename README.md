@@ -49,7 +49,7 @@ All three turn code into something you can see, and all three are worth knowing.
 | **Made for** | People who build with AI and don't read the code | Anyone explaining a system, a process or an idea | Developers getting to know a large codebase |
 | **What you get** | A zoomable map of your whole app: parts, files and endpoints, the screens, the requests between frontend and backend (even across repos), and outside services | A polished diagram in one of 10 types (architecture, sequence, ERD…) or a one-page explainer, from a repo or just a description | A knowledge graph of every file, function and class, with layers, a business-domain view and guided tours |
 | **Only here** | **Health check** (keys in code, open Supabase tables and Firebase rules, fakeable Stripe webhooks, endpoints anyone can use), **Recent work** (what your AI just changed, and why), blueprints from a PRD | 10 diagram types, image and video exports, diagrams of things that aren't code | Diff impact, a dashboard that adapts to your role, knowledge-base graphs |
-| **Runs in** | Claude Code, Codex | Claude Code, Codex, Cursor, OpenCode and more | Claude Code, Codex, Cursor, Copilot, Gemini CLI and more |
+| **Runs in** | Claude Code, Codex, Cursor | Claude Code, Codex, Cursor, OpenCode and more | Claude Code, Codex, Cursor, Copilot, Gemini CLI and more |
 
 **Pick Floorplan** to understand and check an app you own. **Pick Archify** to draw a diagram for a doc, a talk or a decision. **Pick Understand Anything** to study a large codebase function by function.
 
@@ -161,7 +161,7 @@ Want to click around yourself? Open the [live demo](https://haydenschmitty.githu
 
 ## Install
 
-You need [Node.js 18+](https://nodejs.org) and either Claude Code or Codex. Floorplan runs on the plan you already have, with no API keys.
+You need [Node.js 18+](https://nodejs.org) and Claude Code, Codex or Cursor. Floorplan runs on the plan you already have, with no API keys.
 
 ### Claude Code
 
@@ -190,6 +190,13 @@ codex plugin add floorplan@floorplan
 ```
 
 Start a new chat and ask for a floorplan, or type `$floorplan`. The map's Ask bar runs on your own Codex sign-in, with no API key. More in [Floorplan in Codex](docs/codex.md).
+
+### Cursor
+
+1. In Cursor, open **Customize** and choose **From GitHub Repository**.
+2. Enter `mohammedfarish/floorplan` and install **Floorplan**.
+
+To try it without a marketplace, copy this repo into `~/.cursor/plugins/local/floorplan` and reload the window. Then ask Cursor's agent for a floorplan. The map works in Cursor, but its Ask bar still needs the Claude Code CLI or Codex on your computer for now. More in [Floorplan in Cursor](docs/cursor.md).
 
 ## Quick start
 
@@ -260,6 +267,7 @@ More in [Privacy and security](docs/privacy-and-security.md). Wondering whether 
 |---|---|
 | [Getting started](docs/getting-started.md) | Install, first map, updating, planning from a PRD, removing |
 | [Floorplan in Codex](docs/codex.md) | Installing and using it in Codex |
+| [Floorplan in Cursor](docs/cursor.md) | Installing it in Cursor, and what still needs Claude Code or Codex |
 | [Using the map](docs/using-the-map.md) | Every button, view, shortcut and menu |
 | [How it works](docs/how-it-works.md) | The pipeline, connection matching, refreshes |
 | [What's in your project](docs/project-files.md) | Every file Floorplan creates, and how to edit it |

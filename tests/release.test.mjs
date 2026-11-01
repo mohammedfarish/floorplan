@@ -1,4 +1,4 @@
-// Release hygiene: the plugin manifests, the README badge and the changelog agree on the version,
+// Release hygiene: the plugin manifests (Claude Code, Codex and Cursor), the README badge and the changelog agree on the version,
 // so a release never ships half-bumped.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -34,6 +34,26 @@ test('the Codex marketplace lists this plugin, from this repo', () => {
   const entry = codexMarket.plugins.find((p) => p.name === plugin.name);
   assert.ok(entry, `.agents/plugins/marketplace.json lists ${plugin.name}`);
   assert.deepEqual(entry.source, { source: 'local', path: './' });
+});
+
+test('the Cursor plugin matches the Claude Code plugin and points at the same skill', () => {
+  const cursor = readJson(path.join(REPO, '.cursor-plugin', 'plugin.json'));
+  assert.equal(cursor.name, plugin.name);
+  assert.equal(cursor.version, plugin.version, '.cursor-plugin/plugin.json version');
+  assert.equal(cursor.description, plugin.description);
+  assert.equal(cursor.license, plugin.license);
+  assert.deepEqual(cursor.keywords, plugin.keywords);
+  assert.equal(cursor.skills, './skills/');
+  assert.ok(fs.existsSync(path.join(REPO, 'skills', plugin.name, 'SKILL.md')));
+  assert.ok(fs.existsSync(path.join(REPO, cursor.logo)), `logo: ${cursor.logo}`);
+});
+
+test('the Cursor marketplace lists this plugin, from this repo', () => {
+  const cursorMarket = readJson(path.join(REPO, '.cursor-plugin', 'marketplace.json'));
+  assert.ok(cursorMarket.owner?.name, '.cursor-plugin/marketplace.json owner.name');
+  const entry = cursorMarket.plugins.find((p) => p.name === plugin.name);
+  assert.ok(entry, `.cursor-plugin/marketplace.json lists ${plugin.name}`);
+  assert.equal(entry.source, './');
 });
 
 test('the README version badge matches plugin.json', () => {

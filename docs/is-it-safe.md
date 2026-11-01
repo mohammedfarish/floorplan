@@ -1,6 +1,6 @@
 # Is it safe to install?
 
-Plugins for Claude Code and Codex can run code on your computer, so it's worth asking. Some malicious plugins look harmless when you install them, then download and run something else later (a "stage two"). Floorplan is built so it can't do that, a test checks it on every change, and you can confirm all of it yourself.
+Plugins for Claude Code, Codex and Cursor can run code on your computer, so it's worth asking. Some malicious plugins look harmless when you install them, then download and run something else later (a "stage two"). Floorplan is built so it can't do that, a test checks it on every change, and you can confirm all of it yourself.
 
 ## What Floorplan never does
 
@@ -35,7 +35,7 @@ Each is started directly with its arguments, never as a command line for a shell
 
 ### What runs without asking
 
-In Claude Code, while the skill is in use, it pre-approves one kind of command: `node` running one of its own scripts, each named exactly (`scripts/build.mjs`, `describe.mjs`, `open.mjs`, `plan.mjs`, `recent.mjs`, `refresh.mjs`, `scan.mjs` and `status.mjs`). That list is fixed by the tests below. Anything else Claude does asks according to your permission settings, as usual. Codex asks according to your approval settings.
+In Claude Code, while the skill is in use, it pre-approves one kind of command: `node` running one of its own scripts, each named exactly (`scripts/build.mjs`, `describe.mjs`, `open.mjs`, `plan.mjs`, `recent.mjs`, `refresh.mjs`, `scan.mjs` and `status.mjs`). That list is fixed by the tests below. Anything else Claude does asks according to your permission settings, as usual. Codex asks according to your approval settings, and Cursor according to your own settings.
 
 ### Three things worth explaining
 
@@ -52,7 +52,7 @@ In Claude Code, while the skill is in use, it pre-approves one kind of command: 
 
 [`tests/supply-chain.test.mjs`](../tests/supply-chain.test.mjs) runs on every push and pull request, on Linux and Windows (and weekly on macOS). It fails if a change would:
 
-- add a hook, an MCP server, a dependency or an install script;
+- add a hook, an MCP server, a dependency or an install script, or anything beyond the skill to a plugin manifest;
 - send a request anywhere other than the map's own server and the waitlist;
 - start a program not in the table above, or start one through a shell;
 - use `eval`, load code at run time, or hide a long encoded string in the code;

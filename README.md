@@ -33,7 +33,7 @@ Claude or Codex reads your codebase and draws an interactive map of it. Every pa
 
 You built an app, probably with a lot of help from AI, and it works. But ask "what happens when someone checks out?" or "what breaks if I change this?" and the honest answer is *no idea*.
 
-Floorplan gives you the diagram nobody drew. Ask Claude Code or Codex for a floorplan and a few minutes later you have a map you can explore, ask questions on, and keep up to date as you work.
+Floorplan gives you the diagram nobody drew. Ask Claude Code, Codex or Cursor for a floorplan and a few minutes later you have a map you can explore, ask questions on, and keep up to date as you work.
 
 - **For builders:** understand the app you made, in your own words, without reading the code.
 - **For teams:** onboard someone in minutes, from the big picture down to the exact file.
@@ -200,7 +200,7 @@ To try it without a marketplace, copy this repo into `~/.cursor/plugins/local/fl
 
 ## Quick start
 
-1. Open your project in Claude Code or Codex. For a frontend and backend in separate repos, open the folder that holds both.
+1. Open your project in Claude Code, Codex or Cursor. For a frontend and backend in separate repos, open the folder that holds both.
 2. Ask:
    > Make me a floorplan of this app.
 

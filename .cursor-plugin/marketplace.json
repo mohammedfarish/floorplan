@@ -1,0 +1,17 @@
+{
+  "name": "floorplan",
+  "owner": {
+    "name": "Mohammed Farish"
+  },
+  "metadata": {
+    "description": "Floorplan: an interactive map of your codebase for Cursor."
+  },
+  "plugins": [
+    {
+      "name": "floorplan",
+      "source": "./",
+      "description": "An interactive map of your codebase: every part, file and web request with a plain-English name and description, plus a health check, screens, guided flows and recent-work highlights.",
+      "category": "developer-tools"
+    }
+  ]
+}

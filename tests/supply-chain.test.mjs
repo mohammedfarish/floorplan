@@ -41,14 +41,20 @@ function find(re) {
 test('the plugin is only a skill: no hooks, MCP servers or commands that run on their own', () => {
   // .claude/ is the maintainer's own local settings, ignored by git
   const all = allFiles(REPO).filter((f) => !f.startsWith('.claude/'));
-  assert.deepEqual(all.filter((f) => /(^|\/)(hooks\.json|\.mcp\.json|\.lsp\.json)$/.test(f) || /(^|\/)hooks\//.test(f)), [], `no hooks or MCP/LSP servers. ${UPDATE}`);
+  assert.deepEqual(all.filter((f) => /(^|\/)(hooks\.json|\.?mcp\.json|\.lsp\.json)$/.test(f) || /(^|\/)hooks\//.test(f)), [], `no hooks or MCP/LSP servers. ${UPDATE}`);
   // documentationUrl, privacyPolicyUrl and supportUrl are only links, shown on the Claude plugin directory listing
   assert.deepEqual(Object.keys(json('.claude-plugin/plugin.json')).sort(), ['author', 'description', 'documentationUrl', 'homepage', 'keywords', 'license', 'name', 'privacyPolicyUrl', 'repository', 'supportUrl', 'version'], `Claude Code manifest: nothing beyond the skill. ${UPDATE}`);
   assert.deepEqual(Object.keys(json('.codex-plugin/plugin.json')).sort(), ['author', 'description', 'homepage', 'interface', 'keywords', 'license', 'name', 'repository', 'requires_local_executor', 'skills', 'version'], `Codex manifest: nothing beyond the skill. ${UPDATE}`);
   assert.equal(json('.codex-plugin/plugin.json').skills, './skills/');
-  // both marketplaces install from this repo itself, never from somewhere else
+  // displayName, logo and category only change how Cursor lists the plugin
+  assert.deepEqual(Object.keys(json('.cursor-plugin/plugin.json')).sort(), ['author', 'category', 'description', 'displayName', 'homepage', 'keywords', 'license', 'logo', 'name', 'repository', 'skills', 'version'], `Cursor manifest: nothing beyond the skill. ${UPDATE}`);
+  assert.equal(json('.cursor-plugin/plugin.json').skills, './skills/');
+  // a root plugin.json (the Agent Plugins manifest) would change how Codex loads the plugin, so there isn't one
+  assert.ok(!fs.existsSync(path.join(REPO, 'plugin.json')), `no root plugin.json. ${UPDATE}`);
+  // every marketplace installs from this repo itself, never from somewhere else
   assert.deepEqual(json('.claude-plugin/marketplace.json').plugins.map((p) => p.source), ['./']);
   for (const p of json('.agents/plugins/marketplace.json').plugins) assert.equal(typeof p.source === 'string' ? p.source : p.source?.path, './', `Codex marketplace source. ${UPDATE}`);
+  assert.deepEqual(json('.cursor-plugin/marketplace.json').plugins.map((p) => p.source), ['./'], `Cursor marketplace source. ${UPDATE}`);
 });
 
 test('nothing to install: no dependencies and no install scripts', () => {

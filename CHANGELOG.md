@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- **Floorplan installs in Cursor.** The repo is now a Cursor plugin and marketplace too (`.cursor-plugin/`), with the same skill and map. Import `mohammedfarish/floorplan` from **Customize**, or copy it into `~/.cursor/plugins/local` to try it. The map's Ask bar still answers through the Claude Code CLI or Codex for now. See [Floorplan in Cursor](docs/cursor.md).
+
 ## 0.6.1 (2026-11-01)
 
 - **Fewer false alarms in Health** (thanks to the user who reported these):

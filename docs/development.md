@@ -12,6 +12,10 @@
   icon.png
 .agents/plugins/
   marketplace.json     this repo as a Codex marketplace
+.cursor-plugin/
+  plugin.json          the same plugin for Cursor (same skill, same version)
+  marketplace.json     this repo as a Cursor marketplace
+  icon.png
 skills/floorplan/
   SKILL.md             the workflow Claude and Codex follow
   agents/openai.yaml   how Codex lists the skill
@@ -55,7 +59,7 @@ claude plugin install floorplan@floorplan
 
 A plugin installed from a local folder runs straight from it, so edits apply in the next session with no update step.
 
-To try it in Codex, see [Trying a working copy](codex.md#trying-a-working-copy). Codex copies a local plugin when you add it, so run `codex plugin add floorplan@floorplan` again after each change. `--agent claude|codex` on build.mjs (or `FLOORPLAN_AGENT`) and `--engine claude|codex` on serve.mjs let you try either agent's map from anywhere.
+To try it in Cursor, see [Trying a working copy](cursor.md#trying-a-working-copy). To try it in Codex, see [Trying a working copy](codex.md#trying-a-working-copy). Codex copies a local plugin when you add it, so run `codex plugin add floorplan@floorplan` again after each change. `--agent claude|codex` on build.mjs (or `FLOORPLAN_AGENT`) and `--engine claude|codex` on serve.mjs let you try either agent's map from anywhere.
 
 The scripts also run on their own, which is the fastest way to work on them:
 
@@ -92,7 +96,7 @@ The tests use Node's built-in test runner, so there's nothing to install (`npm t
 | `phone.test.mjs` | phone and tablet layout: the top bar wraps instead of overflowing, icon-only buttons keep a name, 44 px touch targets, the details sheet that opens when a box is tapped, the zoom buttons in the top row, the folding description and the AI-tool note shown only while asking (checks on the built page, not a real screen) |
 | `ask.test.mjs` | asking through Claude Code or Codex: which one is used, read-only, follow-ups, sign-in errors (stand-in CLIs in `fixtures/fake-cli/`) |
 | `agents.test.mjs` | telling Claude Code from Codex, and what a map built by each records and writes |
-| `release.test.mjs` | the version agrees across both plugins' `plugin.json`, the README badge, the changelog and `CHECKSUMS.txt` |
+| `release.test.mjs` | the version agrees across the Claude Code, Codex and Cursor `plugin.json`, the README badge, the changelog and `CHECKSUMS.txt`, and every marketplace lists the plugin from this repo |
 | `supply-chain.test.mjs` | what the plugin can do stays what [Is it safe to install?](is-it-safe.md) says: no hooks, MCP servers or dependencies, one outbound request, a fixed list of programs and pre-approved scripts, no code loaded at run time, the vendored layout engine unchanged |
 | `touch.test.mjs` | touch gestures: a drag follows one finger and ends on a cancelled touch, two-finger pinch and pan, nothing re-fits the map mid-gesture (checks on the built page, not a real screen) |
 
@@ -161,7 +165,7 @@ An engine must be read-only in a way its CLI enforces, not only because the prom
    npm test
    claude plugin validate . --profile directory
    ```
-2. Bump `version` in `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json`, and the version badge in `README.md`.
+2. Bump `version` in `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json` and `.cursor-plugin/plugin.json`, and the version badge in `README.md`.
 3. Rename `## Unreleased` in `CHANGELOG.md` to `## X.Y.Z (YYYY-MM-DD)`.
 4. Write the release's fingerprints, after the version bump:
    ```bash

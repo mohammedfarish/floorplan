@@ -56,6 +56,46 @@ test('the Cursor marketplace lists this plugin, from this repo', () => {
   assert.equal(entry.source, './');
 });
 
+// A small JSON Schema (draft-07) checker covering what Cursor's marketplace schema uses,
+// so the test stays dependency-free. Schema copied from github.com/cursor/plugins/schemas.
+function schemaErrors(schema, value, root = schema, at = '$') {
+  if (schema.$ref) return schemaErrors(schema.$ref.replace('#/', '').split('/').reduce((o, k) => o[k], root), value, root, at);
+  if (schema.oneOf) {
+    const ok = schema.oneOf.filter((s) => schemaErrors(s, value, root, at).length === 0).length;
+    return ok === 1 ? [] : [`${at}: matches ${ok} of oneOf`];
+  }
+  if ('const' in schema) return value === schema.const ? [] : [`${at}: must be ${JSON.stringify(schema.const)}`];
+  const errors = [];
+  const type = Array.isArray(value) ? 'array' : value === null ? 'null' : typeof value;
+  if (schema.type && schema.type !== type) return [`${at}: expected ${schema.type}, got ${type}`];
+  if (type === 'string') {
+    if (schema.minLength != null && value.length < schema.minLength) errors.push(`${at}: too short`);
+    if (schema.pattern && !new RegExp(schema.pattern).test(value)) errors.push(`${at}: does not match ${schema.pattern}`);
+  }
+  if (type === 'array' && schema.items) value.forEach((v, i) => errors.push(...schemaErrors(schema.items, v, root, `${at}[${i}]`)));
+  if (type === 'object') {
+    const props = schema.properties || {};
+    for (const key of schema.required || []) if (!(key in value)) errors.push(`${at}: missing ${key}`);
+    if (schema.minProperties != null && Object.keys(value).length < schema.minProperties) errors.push(`${at}: too few properties`);
+    for (const [key, v] of Object.entries(value)) {
+      if (props[key]) errors.push(...schemaErrors(props[key], v, root, `${at}.${key}`));
+      else if (schema.additionalProperties === false) errors.push(`${at}: ${key} is not allowed`);
+      else if (typeof schema.additionalProperties === 'object') errors.push(...schemaErrors(schema.additionalProperties, v, root, `${at}.${key}`));
+    }
+  }
+  return errors;
+}
+
+test('the Cursor marketplace passes Cursor\'s official marketplace schema', () => {
+  const schema = readJson(path.join(REPO, 'tests', 'fixtures', 'cursor-marketplace.schema.json'));
+  const market = readJson(path.join(REPO, '.cursor-plugin', 'marketplace.json'));
+  assert.deepEqual(schemaErrors(schema, market), []);
+  // The checker itself must catch the field that slipped through before.
+  const bad = structuredClone(market);
+  bad.plugins[0].category = 'developer-tools';
+  assert.ok(schemaErrors(schema, bad).some((e) => e.includes('category is not allowed')));
+});
+
 test('the README version badge matches plugin.json', () => {
   assert.match(read('README.md'), new RegExp(`badge/version-${plugin.version.replaceAll('.', '\\.')}-`));
 });

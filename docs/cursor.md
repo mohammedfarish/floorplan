@@ -13,7 +13,7 @@ Floorplan installs in [Cursor](https://cursor.com) as a Cursor plugin: the same 
 **From GitHub:**
 
 1. In Cursor, open **Customize**.
-2. Choose **From GitHub Repository** and enter `mohammedfarish/floorplan`.
+2. Choose **From GitHub Repository** and enter `haydenschmitty/floorplan`.
 3. Install **Floorplan**, for a project or for every project.
 4. Start a new chat.
 

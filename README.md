@@ -194,7 +194,7 @@ Start a new chat and ask for a floorplan, or type `$floorplan`. The map's Ask ba
 ### Cursor
 
 1. In Cursor, open **Customize** and choose **From GitHub Repository**.
-2. Enter `mohammedfarish/floorplan` and install **Floorplan**.
+2. Enter `haydenschmitty/floorplan` and install **Floorplan**.
 
 To try it without a marketplace, copy this repo into `~/.cursor/plugins/local/floorplan` and reload the window. Then ask Cursor's agent for a floorplan. The map works in Cursor, but its Ask bar still needs the Claude Code CLI or Codex on your computer for now. More in [Floorplan in Cursor](docs/cursor.md).
 
